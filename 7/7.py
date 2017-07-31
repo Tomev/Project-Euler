@@ -9,10 +9,12 @@ def is_prime(num):
             return False
     return True
 
-number = 600851475143
+count = 0
+number = 1
 
-for i in range(1, int(math.sqrt(number))):
-    if is_prime(i) and number % i == 0:
-        x = i
+while count != 10001:
+    number += 1
+    if is_prime(number):
+        count += 1
 
-print(x)
+print(number)
