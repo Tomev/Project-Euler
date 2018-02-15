@@ -9,4 +9,5 @@ def is_prime(num):
             return False
     return True
 
+
 print(sum(i for i in range(3, 2000001, 2) if is_prime(i)) + 2)

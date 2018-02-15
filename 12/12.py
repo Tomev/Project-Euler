@@ -16,6 +16,7 @@ def count_number_of_divisors(number):
 
     return divisors_num
 
+
 triangle_number = 1
 i = 2
 

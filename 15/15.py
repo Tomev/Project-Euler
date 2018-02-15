@@ -1,73 +1,149 @@
 import time
 
 
-def get_number_of_possible_paths(grid, row, column):
-    retval = 0
+class PositionData:
+    positionsData = []
+    value = 0
 
-    if can_go_down(grid, row, column):
-        retval += get_number_of_possible_paths(grid, row + 1, column)
-    else:
-        return 1
-    if can_go_right(grid, row, column):
-        retval += get_number_of_possible_paths(grid, row, column + 1)
-    else:
-        return 1
-
-    return retval
-
-    #if can_go_down(grid, row) and can_go_right(grid, column, row):
-        #retval = get_number_of_possible_paths(grid, row + 1, column)
-        #retval += get_number_of_possible_paths(grid, row, column + 1)
-        #return retval
-
-    #else:
-        #return 1
+    def __init__(self, pos, val):
+        self.positionsData = pos
+        self.value = val
 
 
-def can_go_down(grid, row, column):
-    if column > len(grid[0]):
+positionsData = []
+columns_num = 20
+rows_num = 20
+
+
+def list_contains_position_data(position):
+    global positionsData
+
+    if len(positionsData) == 0:
         return False
-    if row < len(grid):
-        return True
+
+    # print(positionsData)
+
+    for posData in positionsData:
+        if position[0] == posData.positionsData[0] and position[1] == posData.positionsData[1]:
+            return True
 
     return False
 
 
-def can_go_right(grid, row, column):
-    if row >= len(grid):
-        return False
-    if column < len(grid[row]):
-        return True
+def get_position_data_from_list(position):
+    global positionsData
 
+    for posData in positionsData:
+        if position[0] == posData.positionsData[0] and position[1] == posData.positionsData[1]:
+            return posData.value
+
+    print("Returning -1")
+
+    return -1
+
+
+# Extreme programming should be use for better performance
+def get_number_of_possible_paths_from_position(position):
+    return move_down_if_possible(position[:]) + move_right_if_possible(position[:])
+
+
+def is_at_end(position):
+
+    global rows_num
+    global columns_num
+
+    if position[0] == rows_num or position[1] == columns_num:
+        return True
     return False
+
+
+def move_right_if_possible(position):
+
+    global positionsData
+
+    position[1] += 1
+
+    # print(position)
+
+    if list_contains_position_data(position):
+
+        result = get_position_data_from_list(position)
+
+    else:
+
+        result = 1 if is_at_end(position) else move_down_if_possible(position[:]) + move_right_if_possible(position[:])
+        positionsData += [PositionData(position, result)]
+
+    print(position, ", ", result)
+
+    return result
+
+
+def move_down_if_possible(position):
+
+    global positionsData
+
+    position[0] += 1
+
+    # print(position)
+
+    if list_contains_position_data(position):
+
+        result = get_position_data_from_list(position)
+
+    else:
+
+        result = 1 if is_at_end(position) else move_down_if_possible(position[:]) + move_right_if_possible(position[:])
+        positionsData += [PositionData(position, result)]
+
+    print(position, ", ", result)
+
+    return result
 
 
 start_time = time.time()
 
-#myGrid = [[0 for x in range(20)] for y in range(20)]
-#myGrid = []
+print("Counting dynamic...")
 
-#for x in range(1, 2):
+my_position = [0, 0]
 
-#    myRow = []
+print(get_number_of_possible_paths_from_position(my_position[:]))
 
-#    for y in range(0, x):
+# print(get_number_of_possible_paths(myGrid, 0, 0))
 
-#        myRow.append(0)
+elapsed_time = time.time() - start_time
 
-#    myGrid.append(myRow)
+print("Elapsed time: ", elapsed_time)
 
-#print(myGrid[19])
-#print(myGrid)
+# Combinatorial
 
 
-myGrid = [[0 for x in range(20)] for y in range(20)]
+def factorial(a):
 
-#print(myGrid)
+    if a == 0:
+        return 1
 
-print("Counting...")
+    result = 1
 
-print(get_number_of_possible_paths(myGrid, 0, 0))
+    for i in range(1, a + 1):
+        result *= i
+
+    return result
+
+
+def binomial_coefficient(a, b):
+
+    result = factorial(a)
+    result /= factorial(a-b) * factorial(b)
+
+    return result
+
+
+start_time = time.time()
+
+print("Counting combinatorial...")
+
+print(binomial_coefficient(rows_num + columns_num, rows_num))
 
 elapsed_time = time.time() - start_time
 

@@ -6,6 +6,7 @@ def is_palindrome(string):
         i += 1
     return True
 
+
 x = 0
 
 for i in range(999, 100, -1):

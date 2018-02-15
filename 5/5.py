@@ -4,6 +4,7 @@ def is_divisible_by_numbers_from_2_to_20(number):
             return False
     return True
 
+
 x = 20
 
 while True:

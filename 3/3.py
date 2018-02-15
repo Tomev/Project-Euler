@@ -9,6 +9,7 @@ def is_prime(num):
             return False
     return True
 
+
 number = 600851475143
 
 for i in range(1, int(math.sqrt(number))):

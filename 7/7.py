@@ -9,6 +9,7 @@ def is_prime(num):
             return False
     return True
 
+
 count = 0
 number = 1
 
