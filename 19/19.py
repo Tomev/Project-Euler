@@ -25,8 +25,8 @@ def get_days_num_form_month_number(month, year):
 i_year = 1900
 day = 1
 
+# Prepare for year
 for i_month in range(1, 12 + 1):
-    print(day)
     day = (day + get_days_num_form_month_number(i_month, i_year)) % 7;
 
 sundayStarts = 0
