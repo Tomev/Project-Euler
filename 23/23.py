@@ -7,6 +7,7 @@ def is_abundant_number(number):
 
     return divisors_sum > number
 
+
 def find_proper_divisors(number):
     proper_divisors = []
 
@@ -15,6 +16,7 @@ def find_proper_divisors(number):
             proper_divisors.append(div)
 
     return proper_divisors
+
 
 def is_double_abundant_sum(number, abudantNums):
 
@@ -26,6 +28,7 @@ def is_double_abundant_sum(number, abudantNums):
             if abundant_sum == number:
                 return True
     return False
+
 
 abundant_numbers = []
 
