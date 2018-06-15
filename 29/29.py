@@ -1,5 +1,3 @@
-
-
 def get_function_value(a, b):
     result = 1
     for i in range(0, b):
