@@ -1,10 +1,10 @@
-import math
+from math import sqrt
 
 
 def is_prime(num):
     if num <= 1:
         return False
-    for denominator in range(2, int(math.sqrt(num)) + 1):
+    for denominator in range(2, int(sqrt(num)) + 1):
         if num % denominator == 0:
             return False
     return True
@@ -17,50 +17,6 @@ def is_circular_prime(num):
         if not is_prime(int(permutation)):
             return False
     return True
-
-
-''' By mistake I made permutations check, not rotation check. I left permutations generator for future use. '''
-
-
-def get_permutations(string):
-    permutations = set()
-
-    permutations.add(string[0])
-    string = string.replace(string[0], '', 1)
-
-    while len(string) != 0:
-        permutations = get_permutations_of_words_and_letter(permutations, string[0])
-        string = string.replace(string[0], '', 1)
-
-    return permutations
-
-
-def get_permutations_of_words_and_letter(words, letter):
-    permutations = set()
-
-    for word in words:
-        permutations.update(get_permutations_of_word_and_letter(word, letter))
-
-    return permutations
-
-
-def get_permutations_of_word_and_letter(word, letter):
-    permutations = set()
-
-    for i in range(0, len(word)):
-
-        permutation = str('')
-
-        for j in range(0, len(word)):
-            if j == i:
-                permutation = permutation + letter
-            permutation = permutation + word[j]
-
-        permutations.add(permutation)
-
-    permutations.add(word + letter)
-
-    return permutations
 
 
 def get_rotations(string):
