@@ -32,3 +32,38 @@ def is_prime(num):
         if num % denominator == 0:
             return False
     return True
+
+
+def is_palindrome(string):
+    i = 0
+    while len(string) - 1 - i > i:
+        if string[len(string) - i - 1] != string[i]:
+            return False
+        i += 1
+    return True
+
+
+def get_permutations(chars_set):
+    if len(chars_set) < 2:
+        return chars_set
+
+    # Create list of chars so that there's iterable collection
+    chars_list = list(chars_set)
+    sets_permutations = set()
+
+    for index in range(0, len(chars_list)):
+        currently_removed_char = chars_list[0]
+        chars_list = chars_list[1:]
+
+        for permutation in list(get_permutations(set(chars_list))):
+            sets_permutations.add(str(currently_removed_char) + str(permutation))
+
+        chars_list.append(currently_removed_char)
+
+    return sets_permutations
+
+
+
+
+
+
