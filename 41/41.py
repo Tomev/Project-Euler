@@ -3,6 +3,7 @@ from methods import is_prime, get_permutations
 
 start = time.time()
 
+
 def reduce_set_to_possible_primes(numbers_set):
     number_to_remove = set()
     for number in numbers_set:
