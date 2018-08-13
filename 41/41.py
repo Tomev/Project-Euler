@@ -1,8 +1,6 @@
 import time
 from methods import is_prime, get_permutations
 
-start = time.time()
-
 
 def reduce_set_to_possible_primes(numbers_set):
     number_to_remove = set()
@@ -13,6 +11,8 @@ def reduce_set_to_possible_primes(numbers_set):
     for number in number_to_remove:
         numbers_set.remove(number)
 
+
+start = time.time()
 
 chars_set = set(['1', '2', '3', '4', '5', '6', '7', '8', '9'])
 
