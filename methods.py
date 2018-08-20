@@ -63,7 +63,19 @@ def get_permutations(chars_set):
     return sets_permutations
 
 
+def get_nth_pentagonal_number(n):
+    return n * (3 * n - 1) / 2
 
+
+def is_pentagonal(number):
+    n = 1
+    current_pentagonal_number = 0
+    while current_pentagonal_number < number:
+        current_pentagonal_number = get_nth_pentagonal_number(n)
+        n += 1
+    if current_pentagonal_number == number:
+        return True
+    return False
 
 
 
