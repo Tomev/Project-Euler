@@ -63,8 +63,27 @@ def get_permutations(chars_set):
     return sets_permutations
 
 
+def get_nth_triangle_number(n):
+    return n * (n + 1) / 2
+
+
 def get_nth_pentagonal_number(n):
     return n * (3 * n - 1) / 2
+
+
+def get_nth_hexagonal_number(n):
+    return n * (2 * n - 1)
+
+
+def is_triangle(number):
+    n = 1
+    current_triangle_number = 0
+    while current_triangle_number < number:
+        current_triangle_number = get_nth_triangle_number(n)
+        n += 1
+    if current_triangle_number == number:
+        return True
+    return False
 
 
 def is_pentagonal(number):
@@ -78,4 +97,12 @@ def is_pentagonal(number):
     return False
 
 
-
+def is_hexagonal(number):
+    n = 1
+    current_hexagonal_number = 0
+    while current_hexagonal_number < number:
+        current_hexagonal_number = get_nth_hexagonal_number(n)
+        n += 1
+    if current_hexagonal_number == number:
+        return True
+    return False
