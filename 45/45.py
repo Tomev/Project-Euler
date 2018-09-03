@@ -1,5 +1,5 @@
 import time
-from methods import get_nth_triangle_number, is_triangle, is_pentagonal, is_hexagonal
+from methods import get_nth_triangle_number, is_pentagonal, is_hexagonal
 
 start = time.time()
 
