@@ -34,6 +34,16 @@ def is_prime(num):
     return True
 
 
+def get_next_prime(num):
+    if num % 2 == 0:
+        num += 1
+
+    while not is_prime(num):
+        num += 2
+
+    return num
+
+
 def is_palindrome(string):
     i = 0
     while len(string) - 1 - i > i:
