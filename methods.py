@@ -116,3 +116,14 @@ def is_hexagonal(number):
     if current_hexagonal_number == number:
         return True
     return False
+
+
+def get_every_combination_of_n_chars(n, chars_set, combinations_set, ):
+
+
+
+
+
+
+
+
