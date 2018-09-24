@@ -1,5 +1,6 @@
 from math import sqrt
 
+
 # A lot of ifs, so that it potentially works faster
 def is_pandigital_from_1_to_n(string, n):
     if len(string) != n:
@@ -118,8 +119,63 @@ def is_hexagonal(number):
     return False
 
 
-def get_every_combination_of_n_chars(n, chars_set, combinations_set, ):
+def has_only_prime_factors(number):
 
+    if number <= 1:
+        return False
+
+    i = 2
+
+    while number != 1:
+        if number % i == 0:
+            if not is_prime(i):
+                return False
+            else:
+                number = number / i
+                i = 2
+        else:
+            i += 1
+
+    return True
+
+
+def get_number_of_factors(number):
+    factors = set()
+    i = 2
+
+    while number > 1:
+        if number % i == 0:
+            factors.add(i)
+            number = number / i
+            i = 2
+        else:
+            i += 1
+
+    return len(factors)
+
+
+def get_equal_length_combinations(some_string):
+    if len(some_string) < 2:
+        return some_string
+
+    # Create list of chars so that there's iterable collection
+    chars_list = []
+
+    for char in some_string:
+        chars_list.append(char)
+
+    sets_permutations = set()
+
+    for index in range(0, len(chars_list)):
+        currently_removed_char = chars_list[0]
+        chars_list = chars_list[1:]
+
+        for permutation in list(get_equal_length_combinations((chars_list))):
+            sets_permutations.add(str(currently_removed_char) + str(permutation))
+
+        chars_list.append(currently_removed_char)
+
+    return sets_permutations
 
 
 
