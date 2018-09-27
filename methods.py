@@ -35,6 +35,12 @@ def is_prime(num):
     return True
 
 
+def are_primes(numbers):
+    for num in numbers:
+        if not (is_prime(num)):
+            return False
+    return True
+
 def get_next_prime(num):
     if num % 2 == 0:
         num += 1
