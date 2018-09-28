@@ -184,7 +184,23 @@ def get_equal_length_combinations(some_string):
     return sets_permutations
 
 
+def are_permutations(numbers):
 
+    numbers_chars = []
+    last_number_index = -1
+
+    for number in numbers:
+        numbers_chars.append([])
+        last_number_index += 1
+        for a_char in str(number):
+            numbers_chars[last_number_index].append(a_char)
+
+    for number_chars in numbers_chars:
+        for char in numbers_chars[0]:
+            if not number_chars.count(char) == numbers_chars[0].count(char):
+                return False
+
+    return True
 
 
 
