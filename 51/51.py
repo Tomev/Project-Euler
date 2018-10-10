@@ -31,6 +31,12 @@ def find_combinations_of_other_numbers(combinations_len):
 
     possible_combinations = get_n_len_combinations(combinations_len, symbols)
 
+    return possible_combinations
+
+
+def find_frontally_valid_combinations_of_other_numbers(combinations_len):
+    possible_combinations = find_combinations_of_other_numbers(combinations_len)
+
     valid_combinations = []
 
     for combination in possible_combinations:
@@ -40,7 +46,31 @@ def find_combinations_of_other_numbers(combinations_len):
     return valid_combinations
 
 
-print(find_combinations_of_other_numbers(4))
+def find_back_valid_combinations_of_other_numbers(combinations_len):
+    possible_combinations = find_combinations_of_other_numbers(combinations_len)
+
+    valid_combinations = []
+
+    for combination in possible_combinations:
+        if not(int(combination) % 2 == 0 or combination[combinations_len -1] == '5'):
+            valid_combinations.append(combination)
+
+    return valid_combinations
+
+
+def find_both_side_valid_combinations_of_other_numbers(combinations_len):
+    possible_combinations = find_back_valid_combinations_of_other_numbers(combinations_len)
+
+    valid_combinations = []
+
+    for combination in possible_combinations:
+        if not combination[0] == '0':
+            valid_combinations.append(combination)
+
+    return valid_combinations
+
+
+print(find_both_side_valid_combinations_of_other_numbers(4))
 
 current_prime = get_next_prime(10)
 current_prime_len = len(str(current_prime))
