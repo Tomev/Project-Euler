@@ -202,6 +202,21 @@ def are_permutations(numbers):
 
     return True
 
+def get_n_len_combinations(n, symbols):
 
+    if n == 1:
+        return symbols
+
+    combinations = []
+    working_symbols = symbols
+
+    for i in range(0, len(symbols)):
+        removed_symbol = working_symbols[i]
+        rest_of_combinations = get_n_len_combinations(n -1 , working_symbols)
+
+        for combination in rest_of_combinations:
+            combinations.append(str(removed_symbol) + str(combination))
+
+    return combinations
 
 
