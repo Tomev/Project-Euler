@@ -22,10 +22,30 @@ def find_replaceable_positions_combinations(str_length):
     return valid_combinations
 
 
+def find_combinations_of_other_numbers(combinations_len):
+
+    symbols = []
+
+    for i in range(0, 10):
+        symbols.append(str(i))
+
+    possible_combinations = get_n_len_combinations(combinations_len, symbols)
+
+    valid_combinations = []
+
+    for combination in possible_combinations:
+        if not combination[0] == '0':
+            valid_combinations.append(combination)
+
+    return valid_combinations
+
+
+print(find_combinations_of_other_numbers(4))
+
 current_prime = get_next_prime(10)
 current_prime_len = len(str(current_prime))
 
-while current_prime_len < 7:
+while current_prime_len < 3:
     current_prime = get_next_prime(current_prime + 1)
 
     if len(str(current_prime)) > current_prime_len:

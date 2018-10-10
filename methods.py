@@ -218,5 +218,3 @@ def get_n_len_combinations(n, symbols):
             combinations.append(str(removed_symbol) + str(combination))
 
     return combinations
-
-
