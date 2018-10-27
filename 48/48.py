@@ -1,6 +1,6 @@
-sum = 0
+numbers_sum = 0
 
 for i in range(1, 1000 + 1):
-    sum += pow(i, i);
+    numbers_sum += pow(i, i);
 
-print(str(sum)[len(str(sum))-10:])
+print(str(numbers_sum)[len(str(numbers_sum))-10:])
