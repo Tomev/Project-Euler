@@ -218,3 +218,19 @@ def get_n_len_combinations(n, symbols):
             combinations.append(str(removed_symbol) + str(combination))
 
     return combinations
+
+
+def factorial(n):
+
+    if n == 0:
+        return 1
+
+    result = 1
+    i = 1
+
+    while i <= n:
+        result *= i
+        i += 1
+
+    return result
+
