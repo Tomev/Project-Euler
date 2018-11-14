@@ -270,11 +270,6 @@ def prepare_hands(hands_file):
 
 elapsed_time = time.time()
 
-
-a = [1,3,2,1]
-a.sort(reverse=True)
-print(a)
-
 file_name = 'poker.txt'
 poker_file = open(file_name, 'r')
 player_hands = prepare_hands(poker_file)
@@ -284,7 +279,6 @@ number_of_hands = len(player_hands[Player.ONE])
 
 p1wins = 0
 p2wins = 0
-draws = 0
 
 for i in range(0, number_of_hands):
 
@@ -315,5 +309,5 @@ for i in range(0, number_of_hands):
 
 elapsed_time = time.time() - elapsed_time
 
-print(f'p1:{p1wins}, p2:{p2wins}, draws:{draws}, sum:{p1wins + p2wins + draws}')
+print(f'p1:{p1wins}, p2:{p2wins}, sum:{p1wins + p2wins}')
 print('Time: ' + str(elapsed_time))
