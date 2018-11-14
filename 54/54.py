@@ -65,17 +65,13 @@ class PokerHand:
         if len(figures_set) < 5:
             return False
 
-        # Note that sum of differences of consecutive card value with the card with lowest value is always equal to -10
-        smallest_card_value = self.get_smallest_card_value()
-        sum_of_differences_with_smallest_value = 0
+        self.count_sorted_card_values()
 
-        for card in self.cards:
-            sum_of_differences_with_smallest_value += smallest_card_value - self.get_card_value(card)
+        for i in range(0, 4):
+            if self.sorted_cards_values[i] - self.sorted_cards_values[i + 1] != 1:
+                return False
 
-        if sum_of_differences_with_smallest_value == -10:
-            return True
-
-        return False
+        return True
 
     def get_smallest_card_value(self):
         smallest_card_value = 0
@@ -87,18 +83,22 @@ class PokerHand:
 
     @staticmethod
     def get_card_value(card):
-        if card[CardParts.FIGURE] == 'A':
+        return PokerHand.get_figure_value(card[CardParts.FIGURE])
+
+    @staticmethod
+    def get_figure_value(figure):
+        if figure == 'A':
             return 14
-        if card[CardParts.FIGURE] == 'K':
+        if figure == 'K':
             return 13
-        if card[CardParts.FIGURE] == 'Q':
+        if figure == 'Q':
             return 12
-        if card[CardParts.FIGURE] == 'J':
+        if figure == 'J':
             return 11
-        if card[CardParts.FIGURE] == 'T':
+        if figure == 'T':
             return 10
 
-        return int(card[CardParts.FIGURE])
+        return int(figure)
 
     def are_cards_of_same_suit(self):
         suits_set = set()
@@ -112,6 +112,11 @@ class PokerHand:
         if not self.are_cards_consecutive():
             return False
 
+        if self.are_cards_consecutive():
+            self.higher_combination_figure_score = self.count_max_card_value()
+
+        return True
+
     def has_four_of_a_kind(self):
         if self.get_number_of_distinct_figures() != 2:
             return False
@@ -119,8 +124,10 @@ class PokerHand:
         figures = self.get_figures_list()
 
         if figures.count(figures[0]) == 4:
+            self.higher_combination_figure_score = self.get_figure_value(figures[0])
             return True
         if figures.count(figures[1]) == 4:
+            self.higher_combination_figure_score = self.get_figure_value(figures[1])
             return True
 
         return False
@@ -147,12 +154,24 @@ class PokerHand:
         if figures.count(distinct_figures[0]) == 3 or figures.count(distinct_figures[1]) == 3:
             has_three = True
 
+        if has_pair and has_three:
+            if figures.count(distinct_figures[0]) == 3:
+                self.higher_combination_figure_score = self.get_figure_value(distinct_figures[0])
+                self.lower_combination_figure_score = self.get_figure_value(distinct_figures[1])
+            else:
+                self.higher_combination_figure_score = self.get_figure_value(distinct_figures[1])
+                self.lower_combination_figure_score = self.get_figure_value(distinct_figures[0])
+
         return has_pair and has_three
 
     def has_flush(self):
+        if self.are_cards_of_same_suit():
+            self.higher_combination_figure_score = self.count_max_card_value()
         return self.are_cards_of_same_suit()
 
     def has_straight(self):
+        if self.are_cards_consecutive():
+            self.higher_combination_figure_score = self.count_max_card_value()
         return self.are_cards_consecutive()
 
     def has_three_of_a_kind(self):
@@ -161,6 +180,7 @@ class PokerHand:
 
         for figure in distinct_figures:
             if figures.count(figure) == 3:
+                self.higher_combination_figure_score = PokerHand.get_figure_value(figure)
                 return True
 
         return False
@@ -173,15 +193,38 @@ class PokerHand:
         figures = self.get_figures_list()
 
         pairs_count = 0
+        pairs_figures_values = []
 
         for figure in distinct_figures:
             if figures.count(figure) == 2:
+                pairs_figures_values.append(PokerHand.get_figure_value(figure))
                 pairs_count += 1
+
+        if pairs_count == 0:
+            return 0
+
+        self.higher_combination_figure_score = max(pairs_figures_values)
+
+        if pairs_count == 2:
+            self.lower_combination_figure_score = min(pairs_figures_values)
 
         return pairs_count
 
     def has_one_pair(self):
         return self.get_pairs_count() == 1
+
+    def count_max_card_value(self):
+        cards_values = []
+        for card in self.cards:
+            cards_values.append(self.get_card_value(card))
+        return max(cards_values)
+
+    def count_sorted_card_values(self):
+        cards_values = []
+        for card in self.cards:
+            cards_values.append(self.get_card_value(card))
+        cards_values.sort(reverse=True)
+        self.sorted_cards_values =  cards_values
 
 
 class Player(IntEnum):
@@ -207,9 +250,6 @@ class CardParts(IntEnum):
     SUIT = 1
 
 
-
-
-
 def prepare_hands(hands_file):
     hands = [[], []]
 
@@ -230,6 +270,11 @@ def prepare_hands(hands_file):
 
 elapsed_time = time.time()
 
+
+a = [1,3,2,1]
+a.sort(reverse=True)
+print(a)
+
 file_name = 'poker.txt'
 poker_file = open(file_name, 'r')
 player_hands = prepare_hands(poker_file)
@@ -248,7 +293,25 @@ for i in range(0, number_of_hands):
     if player_hands[Player.ONE][i].general_score < player_hands[Player.TWO][i].general_score:
         p2wins += 1
     if player_hands[Player.ONE][i].general_score == player_hands[Player.TWO][i].general_score:
-        draws += 1
+        if player_hands[Player.ONE][i].higher_combination_figure_score > player_hands[Player.TWO][i].higher_combination_figure_score:
+            p1wins += 1
+        elif player_hands[Player.ONE][i].higher_combination_figure_score < player_hands[Player.TWO][i].higher_combination_figure_score:
+            p2wins += 1
+        else:
+            if player_hands[Player.ONE][i].lower_combination_figure_score > player_hands[Player.TWO][i].lower_combination_figure_score:
+                p1wins += 1
+            elif player_hands[Player.ONE][i].lower_combination_figure_score < player_hands[Player.TWO][i].lower_combination_figure_score:
+                p2wins += 1
+            else:
+                player_hands[Player.ONE][i].count_sorted_card_values()
+                player_hands[Player.TWO][i].count_sorted_card_values()
+                for j in range(0, 4):
+                    if player_hands[Player.ONE][i].sorted_cards_values[j] > player_hands[Player.TWO][i].sorted_cards_values[j]:
+                        p1wins += 1
+                        break
+                    if player_hands[Player.ONE][i].sorted_cards_values[j] < player_hands[Player.TWO][i].sorted_cards_values[j]:
+                        p2wins += 1
+                        break
 
 elapsed_time = time.time() - elapsed_time
 
