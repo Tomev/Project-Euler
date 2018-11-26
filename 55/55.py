@@ -19,7 +19,6 @@ for num in range(1, max_num + 1):
     if is_lychrel_number(num):
         lychrel_nums_count += 1
 
-
 elapsed_time = time() - elapsed_time
 print(f'#Lychrel numbers under 10000: {lychrel_nums_count}.')
 print('Time: ' + str(elapsed_time))
