@@ -20,6 +20,7 @@ def get_n_level_denominator(n):
     global_denominators.append(result)
     return result
 
+
 number_of_fractions_with_longer_numerator = 0
 
 elapsed_time = time()
