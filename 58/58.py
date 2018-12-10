@@ -1,4 +1,7 @@
 from methods import is_prime
+from time import time
+
+elapsed_time = time()
 
 current_last = 1
 
@@ -30,3 +33,5 @@ while ratio > 0.1:
     ratio = prime_edges_num / edges_num
 
 print(side_len)
+elapsed_time = time() - elapsed_time
+print('Time: ' + str(elapsed_time))
