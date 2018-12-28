@@ -42,6 +42,9 @@ def are_primes(numbers):
     return True
 
 def get_next_prime(num):
+    if num < 2:
+        return 2
+
     if num % 2 == 0:
         num += 1
 
@@ -233,4 +236,3 @@ def factorial(n):
         i += 1
 
     return result
-
